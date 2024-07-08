@@ -4,11 +4,14 @@ import {
   ModalFooter,
   ModalHeader,
   TextInput,
+  // ts support for some component not availble in lib so ignoring rules here
+  // @ts-ignore
   Select,
+  // @ts-ignore
   SelectItem,
 } from "@carbon/react";
 import { useState, useContext } from "react";
-import { TripDataContext } from "./page";
+import { TripDataContext } from "./Context";
 const defaultDummyData = {
   id: new Date(),
   tripId: "06e84e43-e81a-4e16-9d7c-fa407e214fa4",
@@ -128,6 +131,7 @@ export default function AddTripModal({ open, setOpen }) {
           }}
         />
       </ModalBody>
+      {/* @ts-ignore */}
       <ModalFooter
         onRequestClose={() => {
           setFormData({}), setOpen(false);
@@ -137,7 +141,8 @@ export default function AddTripModal({ open, setOpen }) {
         }}
         primaryButtonText="Add"
         secondaryButtonText="Cancel"
-      />
+      >
+        </ModalFooter>
     </ComposedModal>
   );
 }

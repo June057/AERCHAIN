@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TripDataContext } from "./page";
+import { TripDataContext } from "./Context";
 
 export default function TripHeaders() {
   const { tripData } = useContext(TripDataContext);

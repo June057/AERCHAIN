@@ -5,8 +5,9 @@ import { calculateTATStatus } from "./calcTATStatus";
 import data from "./data.json";
 import TripHeaders from "./TripHeaders";
 import TripActions from "./TripActions";
+import { TripDataContext } from "./Context";
 
-interface data  {
+interface Data  {
   _id: string;
   id?: string;
   TATStatus?:string;
@@ -21,13 +22,13 @@ interface data  {
   tripEndTime: string;
   createdAt: string;
 }
-export const TripDataContext = createContext([]);
+
 
 export default function Home() {
-  const [tripData, setData] = useState<data[]>([]);
+  const [tripData, setData] = useState<Data[]>([]);
 
   useEffect(() => {
-    const rows = data.data.map((data:data) => {
+    const rows = data.data.map((data:Data) => {
       data.id = data.tripId;
       data.TATStatus = calculateTATStatus(data);
       return data;

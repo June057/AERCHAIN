@@ -11,7 +11,7 @@ import {
   TableSelectAll,
 } from "@carbon/react";
 import { useContext} from "react";
-import { TripDataContext } from "./page";
+import { TripDataContext } from "./Context";
 
 const headers = [
   {
@@ -53,7 +53,7 @@ const headers = [
 ];
 
 export default function Trips() {
-  const { tripData, setData } = useContext(TripDataContext);
+  const { tripData } = useContext(TripDataContext);
 
   return (
     <DataTable rows={tripData} headers={headers} isSortable radio={false}>
@@ -82,8 +82,8 @@ export default function Trips() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow {...getRowProps({ row })}>
+            {rows.map((row,index) => (
+              <TableRow {...getRowProps({ row })} key={index}>
                 <TableSelectRow
                   {...getSelectionProps({
                     row,
