@@ -27,6 +27,8 @@ interface Data  {
 export default function Home() {
   const [tripData, setData] = useState<Data[]>([]);
 
+  // setting the data in state so can be used through context in other components
+  //TATStatus is added here
   useEffect(() => {
     const rows = data.data.map((data:Data) => {
       data.id = data.tripId;
@@ -37,6 +39,7 @@ export default function Home() {
     setData(rows);
   }, []);
   return (
+    //to avail the tripdata across components
     <TripDataContext.Provider value={{ tripData, setData }}>
       <div>
         <TripHeaders/>

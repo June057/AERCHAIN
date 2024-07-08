@@ -11,6 +11,7 @@ export default function TripHeaders() {
     marginBottom: 10,
     padding: 10,
   };
+  // plain calculation on status
   const delivered = [...tripData].filter(
     (row) => row.currenStatus == "Delivered"
   ).length;

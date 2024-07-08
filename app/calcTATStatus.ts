@@ -1,5 +1,6 @@
 export const calculateTATStatus = (data) => {
   const tripStartTime:any = new Date(data.tripStartTime);
+  // calculatin trip end days from start and end date
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
   const tripEndDate:any =
     data.tripEndTime === ""
