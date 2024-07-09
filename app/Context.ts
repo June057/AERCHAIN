@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-interface Data  {
+export interface Data  {
+    show?: boolean;
     _id: string;
     id?: string;
     TATStatus?:string;

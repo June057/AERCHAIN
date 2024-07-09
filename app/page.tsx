@@ -6,36 +6,21 @@ import data from "./data.json";
 import TripHeaders from "./TripHeaders";
 import TripActions from "./TripActions";
 import { TripDataContext } from "./Context";
-
-interface Data  {
-  _id: string;
-  id?: string;
-  TATStatus?:string;
-  tripId: string;
-  transporter: string;
-  tripStartTime: string;
-  currentStatusCode: string;
-  currenStatus: string;
-  phoneNumber: number;
-  etaDays: number;
-  distanceRemaining: number;
-  tripEndTime: string;
-  createdAt: string;
-}
-
+import { Data } from "./Context";
 
 export default function Home() {
   const [tripData, setData] = useState<Data[]>([]);
+  // const [filteredData, setFilteredData] = useState<Data[]>([]);
 
   // setting the data in state so can be used through context in other components
   //TATStatus is added here
   useEffect(() => {
     const rows = data.data.map((data:Data) => {
       data.id = data.tripId;
+      data.show= true;
       data.TATStatus = calculateTATStatus(data);
       return data;
     });
-
     setData(rows);
   }, []);
   return (

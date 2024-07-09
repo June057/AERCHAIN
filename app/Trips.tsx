@@ -56,7 +56,7 @@ export default function Trips() {
   const { tripData } = useContext(TripDataContext);
 
   return (
-    <DataTable rows={tripData} headers={headers} isSortable radio={false}>
+    <DataTable rows={[...tripData].filter((trip)=>trip.show===true)} headers={headers} isSortable radio={false}>
       {({
         rows,
         headers,

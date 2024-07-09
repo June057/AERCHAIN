@@ -28,6 +28,7 @@ const defaultDummyData = {
   sourceLongitude: 90.8,
   dest: "Prayagraj",
   destLatitude: 31.9,
+  show:true,
   destLongitude: 90,
   lastPingTime: "2024-02-10T02:49:09.000Z",
   createdAt: "2024-02-07T02:49:09.000Z",
@@ -49,7 +50,7 @@ export default function AddTripModal({ open, setOpen }) {
   };
   const handleSubmit = () => {
     setData((prevData) => {
-      return [...prevData, { ...defaultDummyData, ...formData }];
+      return [{ ...defaultDummyData, ...formData },...prevData];
     });
     setOpen(false);
   };

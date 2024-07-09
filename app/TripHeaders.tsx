@@ -1,44 +1,94 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TripDataContext } from "./Context";
+import { Column, Grid, Tab, TabList, Tabs } from "@carbon/react";
 
-export default function TripHeaders() {
-  const { tripData } = useContext(TripDataContext);
-  
+export default function TripHeaders({}) {
+  const { tripData, setData } = useContext(TripDataContext);
+
   const tripHeader = {
-    display: "flex",
-    justifyContent: "space-around",
     background: "lightgrey",
     marginBottom: 10,
     padding: 10,
   };
-  // plain calculation on status
+  // plain calculation on status count
   const delivered = [...tripData].filter(
     (row) => row.currenStatus == "Delivered"
   ).length;
   const inTransit = [...tripData].filter(
     (row) => row.currenStatus == "In Transit"
   ).length;
+  const delayed = [...tripData].filter(
+    (row) => row.TATStatus == "Delayed"
+  ).length;
+  const statusList = [
+    {
+      name: "Total Trips:",
+      value: tripData.length,
+      key: "totalTrips",
+    },
+    {
+      name: "Delivered:",
+      value: delivered,
+      key: "Delivered",
+    },
+    {
+      name: "Delayed:",
+      value: delayed,
+      key: "Delayed",
+    },
+    {
+      name: "In Transit:",
+      value: inTransit,
+      key: "In Transit",
+    },
+  ];
+  const handleFilterData = (status) => {
+    if (status === "totalTrips")
+      return setData((data) =>
+        data.map((trip) => {
+          trip.show = true;
+          return trip;
+        })
+      );
+
+    setData((prevData) => {
+      if (status === "Delayed")
+        return [...tripData].map((trip) => {
+          if (trip.TATStatus === status) trip.show = true;
+          else trip.show = false;
+          return trip;
+        });
+      else
+        return [...tripData].map((trip) => {
+          if (trip.currenStatus === status) trip.show = true;
+          else trip.show = false;
+          return trip;
+        });
+    });
+  };
 
   return (
     <div style={tripHeader}>
-      <div>
-        Total Trips:{" "}
-        <div>
-          <b>{tripData.length}</b>
-        </div>
-      </div>
-      <div>
-        Delivered:{" "}
-        <div>
-          <b>{delivered}</b>
-        </div>
-      </div>
-      <div>
-        In Transit:{" "}
-        <div>
-          <b>{inTransit}</b>
-        </div>
-      </div>
+      <Grid condensed>
+        <Column lg={10}>
+          <Tabs>
+          {/* @ts-ignore */}
+            <TabList aria-label="List of tabs" contained fullWidth>
+              {statusList.map((status, index) => {
+                return (
+                  <Tab onClick={() => handleFilterData(status.key)} key={index}>
+                    {" "}
+                    {status.name}{" "}
+                    <div>
+                      <b>{status.value}</b>
+                    </div>
+                  </Tab>
+                );
+              })}
+            </TabList>
+          </Tabs>
+        </Column>
+      </Grid>
     </div>
   );
 }
