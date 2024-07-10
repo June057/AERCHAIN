@@ -5,11 +5,12 @@ import { calculateTATStatus } from "./calcTATStatus";
 import data from "./data.json";
 import TripHeaders from "./TripHeaders";
 import TripActions from "./TripActions";
-import { TripDataContext } from "./Context";
+import { TripDataContext ,SelectedRowContext} from "./Context";
 import { Data } from "./Context";
 
 export default function Home() {
   const [tripData, setData] = useState<Data[]>([]);
+  const [rowData, setRowData] = useState<Data>();
   // const [filteredData, setFilteredData] = useState<Data[]>([]);
 
   // setting the data in state so can be used through context in other components
@@ -25,6 +26,7 @@ export default function Home() {
   }, []);
   return (
     //to avail the tripdata across components
+    <SelectedRowContext.Provider value={{ rowData, setRowData }}>
     <TripDataContext.Provider value={{ tripData, setData }}>
       <div>
         <TripHeaders/>
@@ -32,5 +34,6 @@ export default function Home() {
         <Trips />
       </div>
     </TripDataContext.Provider>
+    </SelectedRowContext.Provider>
   );
 }

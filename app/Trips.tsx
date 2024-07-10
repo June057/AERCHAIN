@@ -10,8 +10,8 @@ import {
   TableSelectRow,
   TableSelectAll,
 } from "@carbon/react";
-import { useContext} from "react";
-import { TripDataContext } from "./Context";
+import { useContext } from "react";
+import { SelectedRowContext, TripDataContext } from "./Context";
 
 const headers = [
   {
@@ -54,9 +54,15 @@ const headers = [
 
 export default function Trips() {
   const { tripData } = useContext(TripDataContext);
+  const { setRowData } = useContext(SelectedRowContext);
 
   return (
-    <DataTable rows={[...tripData].filter((trip)=>trip.show===true)} headers={headers} isSortable radio={false}>
+    <DataTable
+      rows={[...tripData].filter((trip) => trip.show === true)}
+      headers={headers}
+      isSortable
+      radio={false}
+    >
       {({
         rows,
         headers,
@@ -74,7 +80,7 @@ export default function Trips() {
                   //  onClick: () => setRowData(row),
                 })}
               />
-              {headers.map((header,index) => (
+              {headers.map((header, index) => (
                 <TableHeader {...getHeaderProps({ header })} key={index}>
                   {header.header}
                 </TableHeader>
@@ -82,12 +88,12 @@ export default function Trips() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row,index) => (
+            {rows.map((row, index) => (
               <TableRow {...getRowProps({ row })} key={index}>
                 <TableSelectRow
                   {...getSelectionProps({
                     row,
-                    //  onClick: () => setRowData(row),
+                  onClick: () => setRowData(tripData.find((data)=>data.id==row.id)),
                   })}
                 />
                 {row.cells.map((cell) => (

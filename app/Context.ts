@@ -9,6 +9,7 @@ export interface Data  {
     tripStartTime: string;
     currentStatusCode: string;
     currenStatus: string;
+    lastPingTime: string;
     phoneNumber: number;
     etaDays: number;
     distanceRemaining: number;
@@ -19,4 +20,9 @@ interface IContextProps {
     tripData: Data[];
     setData: any;
   }
+  interface IContextRowProps {
+    rowData: Data;
+    setRowData: any;
+  }
 export const TripDataContext = createContext({} as IContextProps);
+export const SelectedRowContext = createContext({} as IContextRowProps);
